@@ -10,6 +10,7 @@
 
 export function load() {
   console.log('javascript loaded.');
+  $('#about').load('about.html')
 }
 
 // browser events
