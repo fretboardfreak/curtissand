@@ -39,10 +39,10 @@ BOOTSTRAP_JS = $(NODE)/bootstrap/dist/js/bootstrap.min.js
 JQUERY_JS = $(NODE)/jquery/dist/jquery.min.js
 ESLINT = $(NODE)/eslint/bin/eslint.js
 
-DEPLOY_DEST = CHANGEME
+DEPLOY_DEST = curtsan2@curtissand.com:~/www/new/
 
-include website/website.mk
+include website.mk
 
 .PHONY: deploy
 deploy: all
-	rsync -haP --no-whole-file --inplace $(DIST)/* $(DEPLOY_DEST)
+	rsync -haLP --no-whole-file --inplace $(DIST)/* $(DEPLOY_DEST)
