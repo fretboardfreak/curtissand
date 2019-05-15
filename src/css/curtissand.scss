@@ -18,4 +18,16 @@ $body-bg: $dark;
 $body-color: $light;
 
 
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+}
+
+
 @import "bootstrap";
