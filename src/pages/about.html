@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>Curtis Sand's Homepage</title>
+  <meta name="date" content="2019-05-10 08:00" />
+  <meta name="author" content="Curtis Sand" />
+  <link rel="stylesheet" href="./css/curtissand.css">
+</head>
+<body>
+  <div class="container-fluid no-gutters" id="body">
+    <div class="row mx-auto no-gutters bg-dark sticky-top">
+        <ul class="nav nav-tabs mx-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="posts.html">Posts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="about.html">About</a>
+          </li>
+        </ul>
+    </div>
+
+    <div class="row mx-auto no-gutters mt-5">
+      <div class="col d-none d-md-block"></div>
+      <div class="col-md-8">
+
+        <div class="" id="homeAccordion">
+          <div class="card bg-dark border rounded">
+            <div class="card-header text-center" id="bioHeading">
+              <h2 class="mb-0">
+                <button class="btn btn-link text-light" type="button" data-toggle="collapse" data-target="#biography" aria-expanded="true" aria-controls="biography">
+                  Biography
+                </button>
+              </h2>
+            </div>
+
+            <div id="biography" class="collapse" aria-labelledby="bioHeading" data-parent="#homeAccordion">
+              <div id="bio_content" class="card-body mx-auto"></div>
+            </div>
+          </div>
+
+          <div class="card bg-dark border rounded">
+            <div class="card-header text-center" id="twitterHeading">
+              <h2 class="mb-0">
+                <button class="btn btn-link text-light" type="button" data-toggle="collapse" data-target="#twitterTimeline" aria-expanded="true" aria-controls="twitterTimeline">
+                  Tweets
+                </button>
+              </h2>
+            </div>
+
+            <div id="twitterTimeline" class="collapse mx-auto justify-content-center" aria-labelledby="twitterHeading" data-parent="#homeAccordion">
+              <a class="twitter-timeline" data-width="300" data-theme="dark" href="https://twitter.com/fretboardfreak?ref_src=twsrc%5Etfw">Tweets by fretboardfreak</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col d-none d-md-block"></div>
+    </div>
+
+    <div class="row pt-1">
+      <div class="col d-none d-md-block"></div>
+      <div class="col-md-8 text-right">
+        Copyright Curtis Sand 2019
+      </div>
+      <div class="col d-none d-md-block"></div>
+    </div>
+
+  </div>
+<script type="text/javascript" src='./js/jquery.min.js'></script>
+<script type="text/javascript" src='./js/bootstrap.min.js'></script>
+<script>if (typeof $().emulateTransitionEnd != 'function') {console.log("bootstrap failed to load. ");}</script>
+<script type="text/javascript" src="./js/curtissand.js"></script>
+</body>
+</html>
