@@ -84,7 +84,7 @@ clean-js:
 	rm -rf $(JS_DIST) js bootstrapjs jqueryjs jsdist
 
 .PHONY: clean
-clean : clean-build clean-dist
+clean : clean-build clean-dist clean-source-links
 
 .PHONY: clean-all
 clean-all : clean clean-npm
@@ -139,7 +139,7 @@ static : dist cssdist jsdist
 	test -d $(STATIC) && rsync -haP --no-whole-file --inplace $(STATIC)/* $(STATIC_DIST)/ || true
 	date > static
 
-images : dist
+images : dist link-sources
 	test -d $(IMAGES) && rsync -haP --no-whole-file --inplace $(IMAGES) $(DIST) || true
 	date > imgs
 
@@ -174,3 +174,13 @@ js : jsdist bootstrap jquery
 .PHONY: jslint
 jslint :
 	$(ESLINT) $(JS)/*
+
+# custom targets added for curtissand.com
+link-sources :
+	./bin/source_links.py -v
+	date > link-sources
+
+.PHONY: clean-source-links
+clean-source-links :
+	./bin/source_links.py -v --remove
+	rm -f link-sources
