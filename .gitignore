@@ -8,6 +8,8 @@
 /images
 /sources
 
+/pyvenv
+
 # makefile target timestamp files
 /all
 /cssdist
@@ -17,6 +19,9 @@
 /js
 /jsdist
 /install
+/install-npm
+/install-py
+/python-venv
 /bootstrapjs
 /jqueryjs
 /static
