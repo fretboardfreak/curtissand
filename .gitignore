@@ -1,0 +1,26 @@
+!.gitignore
+
+/build
+/dist
+
+/node_modules
+
+/images
+/sources
+
+# makefile target timestamp files
+/all
+/cssdist
+/css
+/css-compile
+/css-prefix
+/js
+/jsdist
+/install
+/bootstrapjs
+/jqueryjs
+/static
+/link-sources
+
+# use abbr name to avoid collision with images dir
+/imgs
