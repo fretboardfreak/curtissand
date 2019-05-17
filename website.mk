@@ -75,6 +75,10 @@ clean-dist :
 clean-npm :
 	rm -rf $(NODE) install
 
+.PHONY: clean-pyvenv
+clean-pyvenv :
+	rm -rf $(PYVENV) install-python python-venv
+
 .PHONY: clean-css
 clean-css :
 	rm -rf $(CSS_BUILD) $(CSS_DIST) css-compile css-prefix css cssdist
@@ -87,7 +91,7 @@ clean-js:
 clean : clean-build clean-dist clean-source-links
 
 .PHONY: clean-all
-clean-all : clean clean-npm
+clean-all : clean clean-npm clean-pyvenv
 
 
 # directory targets
@@ -109,9 +113,12 @@ cssdist : dist
 
 # install targets
 
+.PHONY: install
+install : install-npm install-py
+
 # note: the dev dependencies have been separated into individual commands here
 # to avoid maxing out my proxy server's open connection limits.
-install :
+install-npm :
 	npm --prefix $(NODE_PKG) install -D @babel/core
 	npm --prefix $(NODE_PKG) install -D @babel/plugin-proposal-class-properties
 	npm --prefix $(NODE_PKG) install -D @babel/preset-env
@@ -128,7 +135,15 @@ install :
 	npm --prefix $(NODE_PKG) install -D rollup-plugin-inject
 	npm --prefix $(NODE_PKG) install -D rollup-plugin-node-resolve
 	npm --prefix $(NODE_PKG) install -D stylelint
-	date > install
+	date > install-npm
+
+install-py : python-venv
+	test -f $(PYTHON_REQUIRES) && $(PYVENV)/bin/pip install -r $(PYTHON_REQUIRES) || true
+	date > install-py
+
+python-venv :
+	python3 -m venv $(PYVENV)
+	date > python-venv
 
 
 # html targets
@@ -175,7 +190,9 @@ js : jsdist bootstrap jquery
 jslint :
 	$(ESLINT) $(JS)/*
 
+
 # custom targets added for curtissand.com
+
 link-sources :
 	./bin/source_links.py -v
 	date > link-sources

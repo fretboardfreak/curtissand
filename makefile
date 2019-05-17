@@ -38,6 +38,8 @@ BOOTSTRAP_SCSS = $(NODE)/bootstrap/scss
 BOOTSTRAP_JS = $(NODE)/bootstrap/dist/js/bootstrap.min.js
 JQUERY_JS = $(NODE)/jquery/dist/jquery.min.js
 ESLINT = $(NODE)/eslint/bin/eslint.js
+PYTHON_REQUIRES = $$(pwd)/requirements.txt
+PYVENV = $$(pwd)/pyvenv
 
 DEPLOY_DEST = curtsan2@curtissand.com:~/www/new/
 
