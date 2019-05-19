@@ -19,9 +19,15 @@ LINKS_BY_HOST = {
         (Path('/Users/csand/fret/blog'),           Path('sources/blog')),
         (Path('/Users/csand/fret/ref'),            Path('sources/ref')),
         (Path('/Users/csand/fret/galleries'),      Path('sources/galleries'))],
-    'obsidian': []
+    'obsidian': [
+        (Path('/home/csand/storage/pics/website/cs'), Path('images')),
+        (Path('/home/csand/git/fret/blog'),           Path('sources/blog')),
+        (Path('/home/csand/git/fret/ref'),            Path('sources/ref')),
+        (Path('/home/csand/git/fret/galleries'),      Path('sources/galleries'))
+    ]
 }
 EXTRA_PATHS_TO_REMOVE = [Path('sources')]
+
 
 def hostname():
     """Get hostname and cache for later."""
@@ -30,12 +36,14 @@ def hostname():
             subprocess.check_output('hostname').decode().strip())
     return hostname.__dict__['value']
 
+
 def rmpath(path):
     """Call the correct remove method for the given path."""
     if path.is_symlink():
         os.remove(path)
     elif path.is_dir():
         os.rmdir(path)
+
 
 def remove():
     """Remove the symlinks to the static source files."""
