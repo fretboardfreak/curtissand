@@ -201,3 +201,8 @@ link-sources :
 clean-source-links :
 	./bin/source_links.py -v --remove
 	rm -f link-sources
+
+build-sources: build link-sources
+	mkdir $(SOURCES_BUILD)
+	rsync -haLP --exclude "*.txt" $(SOURCES)/* $(SOURCES_BUILD)
+	date > build-sources

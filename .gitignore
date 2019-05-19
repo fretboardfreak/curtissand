@@ -26,6 +26,7 @@
 /jqueryjs
 /static
 /link-sources
+/build-sources
 
 # use abbr name to avoid collision with images dir
 /imgs

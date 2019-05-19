@@ -41,6 +41,10 @@ ESLINT = $(NODE)/eslint/bin/eslint.js
 PYTHON_REQUIRES = $$(pwd)/requirements.txt
 PYVENV = $$(pwd)/pyvenv
 
+SOURCES = $$(pwd)/sources
+SOURCES_BUILD = $(BUILD)/sources
+SOURCES_DIST = $(DIST)/sources
+
 DEPLOY_DEST = curtsan2@curtissand.com:~/www/new/
 
 include website.mk
