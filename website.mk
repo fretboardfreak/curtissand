@@ -73,11 +73,11 @@ clean-dist :
 
 .PHONY: clean-npm
 clean-npm :
-	rm -rf $(NODE) install
+	rm -rf $(NODE) install-npm
 
 .PHONY: clean-pyvenv
 clean-pyvenv :
-	rm -rf $(PYVENV) install-python python-venv
+	rm -rf $(PYVENV) install-py python-venv
 
 .PHONY: clean-css
 clean-css :
@@ -92,6 +92,7 @@ clean : clean-build clean-dist clean-source-links
 
 .PHONY: clean-all
 clean-all : clean clean-npm clean-pyvenv
+	rm -rf install
 
 
 # directory targets
@@ -143,6 +144,7 @@ install-py : python-venv
 
 python-venv :
 	python3 -m venv $(PYVENV)
+	$(PYVENV)/bin/pip install --upgrade pip
 	date > python-venv
 
 
