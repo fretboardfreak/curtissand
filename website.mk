@@ -74,6 +74,7 @@ run : all
 	sudo docker run --rm -p 80:80 -v $(DIST):/usr/share/nginx/html \
 		-v $(IMAGES):/usr/share/nginx/html/images nginx
 
+
 # clean targets
 
 .PHONY: clean-build
@@ -153,7 +154,8 @@ install-npm :
 	date > install-npm
 
 install-py : python-venv
-	test -f $(PYTHON_REQUIRES) && $(PYVENV)/bin/pip install -r $(PYTHON_REQUIRES) || true
+	test -f $(PYTHON_REQUIRES) && \
+		$(PYVENV)/bin/pip install -r $(PYTHON_REQUIRES) || true
 	date > install-py
 
 python-venv :
@@ -163,25 +165,33 @@ python-venv :
 
 
 # html targets
+
 html : dist
-	find $(HTML) -iname "*.html" -exec rsync -haP --no-whole-file --inplace '{}' $(DIST)/ ';'
+	find $(HTML) -iname "*.html" \
+		-exec rsync -haP --no-whole-file --inplace '{}' $(DIST)/ ';'
 
 static : dist cssdist jsdist
-	test -d $(STATIC) && rsync -haP --no-whole-file --inplace $(STATIC)/* $(STATIC_DIST)/ || true
+	test -d $(STATIC) && \
+		rsync -haP --no-whole-file --inplace $(STATIC)/* $(STATIC_DIST)/ || true
 	date > static
 
 images : dist link-sources
-	test -d $(IMAGES) && rsync -haP --no-whole-file --inplace $(IMAGES) $(DIST) || true
+	test -d $(IMAGES) && \
+		rsync -haP --no-whole-file --inplace $(IMAGES) $(DIST) || true
 	date > imgs
 
 # css targets
 
 css-compile : build
-	for stylesheet in $$(find $(CSS) -iname "*.scss"); do npx --prefix $(NODE_PKG) node-sass --include-path $(BOOTSTRAP_SCSS) $$stylesheet -o $(CSS_BUILD); done
+	for stylesheet in $$(find $(CSS) -iname "*.scss"); do \
+		npx --prefix $(NODE_PKG) \
+			node-sass --include-path $(BOOTSTRAP_SCSS) $$stylesheet -o $(CSS_BUILD);\
+	done
 	date > css-compile
 
 css-prefix : dist cssdist css-compile
-	npx --prefix $(NODE_PKG) postcss --use autoprefixer --dir $(CSS_DIST) $(CSS_BUILD)
+	npx --prefix $(NODE_PKG) \
+		postcss --use autoprefixer --dir $(CSS_DIST) $(CSS_BUILD)
 	date > css-prefix
 
 css : css-compile css-prefix
