@@ -20,7 +20,7 @@
 #
 ###
 
-
+# targets ordered by importance first, alphabetically second
 .PHONY: help
 help :
 	@echo "Website Makefile"
@@ -29,21 +29,35 @@ help :
 	@echo "    all : Build and compile all project components."
 	@echo "    rebuild : Clean, Build and compile all project components."
 	@echo "    run : Run an NGINX docker image to test the website locally."
+	@echo "    ----"
 	@echo "    clean : Clean all built files (clean-dist, clean-build)."
 	@echo "    clean-all : Clean all files, including installed packages."
 	@echo "    clean-build : Remove the build dir."
 	@echo "    clean-dist : Remove the dist dir."
-	@echo "    clean-npm : Remove the local installed npm modules."
 	@echo "    clean-css : Remove any built CSS files."
 	@echo "    clean-js : Remove any built Javascript files."
+	@echo "    clean-npm : Remove the local installed npm modules."
+	@echo "    clean-pyvenv : Remove the python virtual env and installed files."
+	@echo "    ----"
+	@echo "    install : install everything needed for development."
+	@echo "    install-npm : install NPM packages."
+	@echo "    install-py : install Python packages into the python virtual env."
+	@echo "    python-venv : create a python 3 virtual environment."
+	@echo "    ----"
 	@echo "    build : Make build dir."
 	@echo "    dist : Make dist dir."
-	@echo "    install : install NPM packages."
+	@echo "    ----"
 	@echo "    css : Run both css-compile and css-prefix."
 	@echo "    css-compile : compile from SCSS to CSS using SASS."
 	@echo "    css-prefix : prefix the CSS sheet using postcss autoprefixer."
+	@echo "    ----"
 	@echo "    js : Use rollup and babel to compile javascript sources."
 	@echo "    jslint : Use eslint to check the javascript style."
+	@echo "    ----"
+	@echo "    link-sources : Create symlinks to media or other source files."
+	@echo "    clean-source-links : Remove media and source file symlinks."
+	@echo "    build-sources : Copy all files needed for "
+	@echo "--- ---- ---"
 
 
 # overall build targets
