@@ -12,6 +12,7 @@
 
 # makefile target timestamp files
 /all
+/html
 /cssdist
 /css
 /css-compile
@@ -28,6 +29,7 @@
 /link-sources
 /build-sources
 /compile-rst
+/dist-sources
 
 # use abbr name to avoid collision with images dir
 /imgs
