@@ -62,7 +62,7 @@ help :
 
 # overall build targets
 
-all : html css js static images
+all : html css js static images dist-sources
 	date > all
 
 .PHONY: rebuild
@@ -84,7 +84,7 @@ clean-build :
 .PHONY: clean-dist
 clean-dist :
 	rm -rf $(DIST) css-prefix css all js jqueryjs bootstrapjs \
-		cssdist jsdist static imgs html
+		cssdist jsdist static imgs html dist-sources
 
 .PHONY: clean-npm
 clean-npm :
@@ -237,3 +237,8 @@ build-sources : build link-sources
 compile-rst : build-sources
 	$(PYVENV)/bin/python $$(pwd)/bin/compile_rst_sources.py -v $(SOURCES_BUILD)
 	date > compile-rst
+
+dist-sources : compile-rst dist
+	mkdir -p $(SOURCES_DIST)
+	rsync -haLP $(SOURCES_BUILD)/* $(SOURCES_DIST)
+	date > dist-sources
