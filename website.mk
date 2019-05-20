@@ -70,7 +70,7 @@ rebuild : clean all
 	@echo "rebuild target"
 
 .PHONY: run
-run : all
+run :
 	sudo docker run --rm -p 80:80 -v $(DIST):/usr/share/nginx/html \
 		-v $(IMAGES):/usr/share/nginx/html/images nginx
 
@@ -84,7 +84,7 @@ clean-build :
 .PHONY: clean-dist
 clean-dist :
 	rm -rf $(DIST) css-prefix css all js jqueryjs bootstrapjs \
-		cssdist jsdist static imgs
+		cssdist jsdist static imgs html
 
 .PHONY: clean-npm
 clean-npm :
@@ -169,6 +169,7 @@ python-venv :
 html : dist
 	find $(HTML) -iname "*.html" \
 		-exec rsync -haP --no-whole-file --inplace '{}' $(DIST)/ ';'
+	date > html
 
 static : dist cssdist jsdist
 	test -d $(STATIC) && \
@@ -200,15 +201,15 @@ css : css-compile css-prefix
 
 # js targets
 
-bootstrap : jsdist
+bootstrapjs : jsdist
 	cp $(BOOTSTRAP_JS) $(JS_DIST)
 	date > bootstrapjs
 
-jquery : jsdist
+jqueryjs : jsdist
 	cp $(JQUERY_JS) $(JS_DIST)
 	date > jqueryjs
 
-js : jsdist bootstrap jquery
+js : jsdist bootstrapjs jqueryjs
 	npx --prefix $(NODE_PKG) rollup -c
 	date > js
 
@@ -228,11 +229,11 @@ clean-source-links :
 	$(PYVENV)/bin/python $$(pwd)/bin/source_links.py -v --remove
 	rm -f link-sources
 
-build-sources: build link-sources
-	mkdir $(SOURCES_BUILD)
+build-sources : build link-sources
+	mkdir -p $(SOURCES_BUILD)
 	rsync -haLP --exclude "*.txt" $(SOURCES)/* $(SOURCES_BUILD)
 	date > build-sources
 
-compile-rst: build-sources
+compile-rst : build-sources
 	$(PYVENV)/bin/python $$(pwd)/bin/compile_rst_sources.py -v $(SOURCES_BUILD)
 	date > compile-rst
