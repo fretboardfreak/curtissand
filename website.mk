@@ -220,12 +220,12 @@ jslint :
 # custom targets added for curtissand.com
 
 link-sources :
-	./bin/source_links.py -v
+	$(PYVENV)/bin/python $$(pwd)/bin/source_links.py -v
 	date > link-sources
 
 .PHONY: clean-source-links
 clean-source-links :
-	./bin/source_links.py -v --remove
+	$(PYVENV)/bin/python $$(pwd)/bin/source_links.py -v --remove
 	rm -f link-sources
 
 build-sources: build link-sources
