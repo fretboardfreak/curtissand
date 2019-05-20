@@ -27,6 +27,7 @@
 /static
 /link-sources
 /build-sources
+/compile-rst
 
 # use abbr name to avoid collision with images dir
 /imgs

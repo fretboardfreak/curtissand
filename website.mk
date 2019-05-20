@@ -232,3 +232,7 @@ build-sources: build link-sources
 	mkdir $(SOURCES_BUILD)
 	rsync -haLP --exclude "*.txt" $(SOURCES)/* $(SOURCES_BUILD)
 	date > build-sources
+
+compile-rst: build-sources
+	$(PYVENV)/bin/python $$(pwd)/bin/compile_rst_sources.py -v $(SOURCES_BUILD)
+	date > compile-rst
