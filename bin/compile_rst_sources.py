@@ -10,6 +10,7 @@ document info, summary and article sections of the source RST document.
 import argparse
 import os
 import sys
+import json
 from pathlib import Path
 from xml.etree.ElementTree import fromstring
 
@@ -22,6 +23,54 @@ VERBOSE = False
 DEBUG = False
 
 
+class PostMetadata():
+    def __init__(self, category, tags, summary, date, title,
+                 title_f, body_f, source, **kwargs):
+        self.category = category
+        self.tags = tags
+        self.summary = summary
+        self.date = date
+        self.title = title
+        self.title_f = title_f
+        self.body_f = body_f
+        self.source = source
+        self.sanitize_tags()
+        self.id = str(int(self.date.replace('-', '').replace(' ', '').replace(':', '')))
+
+    def __repr__(self):
+        return 'PostMetadata{date: %s, title: %s}' % (self.date, self.title)
+
+    def sanitize_tags(self):
+        """Parse the tags string into a list of tags."""
+        new_tags = []
+        for part in self.tags.split(' '):  # some tags delimited by space
+            for sub_part in part.split(','):  # some tags delimited by comma
+                sub_part = sub_part.strip()
+                if sub_part:  # ignore empty string
+                    if sub_part not in new_tags:
+                        new_tags.append(sub_part)
+        self.tags = new_tags
+
+    def json(self):
+        return {
+            "category": self.category,
+            "tags": self.tags,
+            "summary": self.summary,
+            "date": self.date,
+            "title": self.title,
+            "title_f": self.title_f,
+            "body_f": self.body_f,
+            "source": self.source}
+
+
+METADATA_FILE = 'metadata.json'  # File of metadata about the posts
+POSTS_FILE = 'posts.json'  # actual post metadata
+
+# {filename: json contents, ...}
+JSON_DATA = {METADATA_FILE: {'categories': [], 'tags': [], 'posts': []},
+             POSTS_FILE: {}}
+
+
 def main():
     """Main script logic."""
     args = parse_cmd_line()
@@ -32,40 +81,59 @@ def main():
               'valid directory.')
         return 1
     visit_dir(sources)
+
+    # sort post lists chronologically with newest first
+    for key in JSON_DATA[METADATA_FILE]:
+        reversed = False if key in ['tags', 'categories'] else True
+        JSON_DATA[METADATA_FILE][key].sort(reverse=reversed)
+
+    # write out all JSON files
+    for json_file, data in JSON_DATA.items():
+        vprint('Writing JSON file %s' % json_file)
+        with open(Path(sources, json_file), 'w') as fout:
+            json.dump(data, fout)
     return 0
 
 
-def visit_dir(src_dir):
+def visit_dir(src_dir, root=None):
     """Visit all files and subdirectories inside the given source dir."""
+    relative_root = root if root else src_dir
     for child in src_dir.iterdir():
         if child.is_dir():
-            visit_dir(child)
+            visit_dir(child, relative_root)
         else:
-            visit_file(child)
+            visit_file(child, relative_root)
 
 
-def visit_file(src_file):
+def visit_file(src_file, root):
     """If the given file is an RST source file, compile it to HTML sources."""
     if (not src_file.exists() or
             not src_file.is_file() or
             not src_file.suffix in ['.rst', '.RST']):
         return
     fname = src_file.name[:-len(src_file.suffix)]  # remove suffix
-    title = os.path.join(*src_file.parts[:-1], fname + '_title.html')
-    body = os.path.join(*src_file.parts[:-1], fname + '_body.html')
+    title = Path(*src_file.parts[:-1], fname + '_title.html')
+    body = Path(*src_file.parts[:-1], fname + '_body.html')
 
     vprint(src_file)
     info = get_docinfo(src_file)
     dprint('  docinfo: %s' % info)
+
     parts = publish_parts(src_file.read_text(), writer_name='html')
 
     dprint('  writing section title to %s' % title)
     with open(title, 'w') as fout:
         fout.write(parts['title'])
+    info['title'] = parts['title']
+    info['title_f'] = str(title.relative_to(root))
 
     dprint('  writing section body to %s' % body)
     with open(body, 'w') as fout:
         fout.write('<p>%s</p>\n%s' % (info['summary'], parts['body']))
+    info['body_f'] = str(body.relative_to(root))
+
+    info['source'] = str(src_file.relative_to(root))
+    gather_data(info)
 
 
 def get_docinfo(src_file):
@@ -79,6 +147,38 @@ def get_docinfo(src_file):
         info[name.text] = ''.join(value.itertext())
     info[date_str] = doctree.find('docinfo').find('date').text
     return info
+
+
+def gather_data(docinfo):
+    """Gather the docinfo data for each post."""
+    global JSON_DATA
+    post = PostMetadata(**docinfo)
+
+    JSON_DATA[POSTS_FILE][post.id] = post.json()
+
+    for tag in post.tags:
+        if tag and tag not in JSON_DATA[METADATA_FILE]['tags']:
+            JSON_DATA[METADATA_FILE]['tags'].append(tag)
+    JSON_DATA[METADATA_FILE]['posts'].append(post.id)
+
+    year = str(post.id)[:4] + ".json"
+    if year in JSON_DATA:
+        JSON_DATA[year][post.id] = post.json()
+    else:
+        JSON_DATA[year] = {post.id: [post.json()]}
+
+    if post.category:  # ignore posts with no category (i.e. about.rst)
+        category = post.category + '.json'
+        if category in JSON_DATA:
+            JSON_DATA[category][post.id] = post.json()
+        else:
+            JSON_DATA[category] = {post.id: [post.json()]}
+        if post.category not in JSON_DATA[METADATA_FILE]['categories']:
+            JSON_DATA[METADATA_FILE]['categories'].append(post.category)
+        if post.category in JSON_DATA[METADATA_FILE]:
+            JSON_DATA[METADATA_FILE][post.category].append(post.id)
+        else:
+            JSON_DATA[METADATA_FILE][post.category] = [post.id]
 
 
 def parse_cmd_line():
