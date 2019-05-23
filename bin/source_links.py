@@ -19,14 +19,16 @@ LINKS_BY_HOST = {
         (Path('/Users/csand/git/fret/blog'), Path('sources/blog')),
         (Path('/Users/csand/git/fret/ref'), Path('sources/ref')),
         (Path('/Users/csand/git/fret/galleries'), Path('sources/galleries')),
-        (Path('/Users/csand/git/fret/about.rst'), Path('sources/about.rst'))
+        (Path('/Users/csand/git/fret/about.rst'), Path('sources/about.rst')),
+        (Path('/Users/csand/git/fret/projects.rst'), Path('sources/projects.rst')),
     ],
     'obsidian': [
         (Path('/home/csand/storage/pics/website/cs'), Path('images')),
         (Path('/home/csand/git/fret/blog'), Path('sources/blog')),
         (Path('/home/csand/git/fret/ref'), Path('sources/ref')),
         (Path('/home/csand/git/fret/galleries'), Path('sources/galleries')),
-        (Path('/home/csand/git/fret/about.rst'), Path('sources/about.rst'))
+        (Path('/home/csand/git/fret/about.rst'), Path('sources/about.rst')),
+        (Path('/home/csand/git/fret/projects.rst'), Path('sources/projects.rst')),
     ]
 }
 EXTRA_PATHS_TO_REMOVE = [Path('sources')]
