@@ -46,157 +46,159 @@
               </h2>
             </div>
 
-            <div id="filters_cont" class="collapse bg-success" aria-labelledby="filters_head" data-parent="#filters_accordion">
+            <div id="filters_cont" class="collapse bg-secondary" aria-labelledby="filters_head" data-parent="#filters_accordion">
               <div id="filters" class="card-body mx-auto">Some filters will go here.</div>
             </div>
           </div>
         </div>
 
-        <div id="posts" class="container-fluid bg-secondary border rounded">
+        <div class="container-fluid bg-light border rounded">
 
           <div class="row justify-content-center">
-            <ul class="pagination mb-0 mt-1">
+            <ul class="pagination mb-0 mt-1" id="ppgr-nav-top">
               <li class="page-item">
-                <a class="page-link bg-success" href="#" aria-label="Previous">
+                <a class="page-link bg-secondary" href="#" aria-label="Previous" id="ppgr-prev">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link bg-success" href="#">1</a></li>
-              <li class="page-item"><a class="page-link bg-success" href="#">2</a></li>
-              <li class="page-item"><a class="page-link bg-success" href="#">3</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">1</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">2</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">3</a></li>
               <li class="page-item">
-                <a class="page-link bg-success" href="#" aria-label="Next">
+                <a class="page-link bg-secondary" href="#" aria-label="Next" id="ppgr-next">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          <div class="row my-2">
-            <div class="container-fluid">
-              <div class="card bg-success w-80">
-                <div class="card-body">
-                  <h5 class="card-title">Post Title</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
+          <div id="ppgr-posts">
+            <div class="row my-2">
+              <div class="container-fluid">
+                <div class="card bg-secondary w-80">
+                  <div class="card-body">
+                    <h5 class="card-title">Post Title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      <div class="row">
+                        <div class="col">
+                          <span class="badge badge-pill badge-success px-3">Category</span>
+                          2019-05-21 20:00
+                        </div>
+                        <div class="col">
+                          <span class="pl-3">Tags:&nbsp;</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                        </div>
+                      </div>
+                    </h6>
+                    <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
                     <div class="row">
-                      <div class="col">
-                        <span class="badge badge-pill badge-success px-3">Category</span>
-                        2019-05-21 20:00
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Full Post</a>
                       </div>
-                      <div class="col">
-                        <span class="pl-3">Tags:&nbsp;</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Source</a>
                       </div>
-                    </div>
-                  </h6>
-                  <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
-                  <div class="row">
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Full Post</a>
-                    </div>
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Source</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="row my-2">
-            <div class="container-fluid">
-              <div class="card bg-success w-80">
-                <div class="card-body">
-                  <h5 class="card-title">Another Post</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
+            <div class="row my-2">
+              <div class="container-fluid">
+                <div class="card bg-secondary w-80">
+                  <div class="card-body">
+                    <h5 class="card-title">Another Post</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      <div class="row">
+                        <div class="col">
+                          <span class="badge badge-pill badge-success px-3">Category</span>
+                          2019-05-21 20:00
+                        </div>
+                        <div class="col">
+                          <span class="pl-3">Tags:&nbsp;</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                        </div>
+                      </div>
+                    </h6>
+                    <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
                     <div class="row">
-                      <div class="col">
-                        <span class="badge badge-pill badge-success px-3">Category</span>
-                        2019-05-21 20:00
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Full Post</a>
                       </div>
-                      <div class="col">
-                        <span class="pl-3">Tags:&nbsp;</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Source</a>
                       </div>
-                    </div>
-                  </h6>
-                  <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
-                  <div class="row">
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Full Post</a>
-                    </div>
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Source</a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="row my-2">
-            <div class="container-fluid">
-              <div class="card bg-success w-80">
-                <div class="card-body">
-                  <h5 class="card-title">More Blog Posts</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">
+            <div class="row my-2">
+              <div class="container-fluid">
+                <div class="card bg-secondary w-80">
+                  <div class="card-body">
+                    <h5 class="card-title">More Blog Posts</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      <div class="row">
+                        <div class="col">
+                          <span class="badge badge-pill badge-success px-3">Category</span>
+                          2019-05-21 20:00
+                        </div>
+                        <div class="col">
+                          <span class="pl-3">Tags:&nbsp;</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                          <span class="badge badge-pill badge-info">tag1</span>
+                          <span class="badge badge-pill badge-info">foo</span>
+                          <span class="badge badge-pill badge-info">bar</span>
+                          <span class="badge badge-pill badge-info">baz</span>
+                          <span class="badge badge-pill badge-info">banana</span>
+                          <span class="badge badge-pill badge-info">website</span>
+                          <span class="badge badge-pill badge-info">programming</span>
+                        </div>
+                      </div>
+                    </h6>
+                    <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
                     <div class="row">
-                      <div class="col">
-                        <span class="badge badge-pill badge-success px-3">Category</span>
-                        2019-05-21 20:00
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Full Post</a>
                       </div>
-                      <div class="col">
-                        <span class="pl-3">Tags:&nbsp;</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
-                        <span class="badge badge-pill badge-info">tag1</span>
-                        <span class="badge badge-pill badge-info">foo</span>
-                        <span class="badge badge-pill badge-info">bar</span>
-                        <span class="badge badge-pill badge-info">baz</span>
-                        <span class="badge badge-pill badge-info">banana</span>
-                        <span class="badge badge-pill badge-info">website</span>
-                        <span class="badge badge-pill badge-info">programming</span>
+                      <div class="col text-right">
+                        <a href="#" class="card-link">Source</a>
                       </div>
-                    </div>
-                  </h6>
-                  <p class="card-text">Post Summary: Vestibulum at nunc nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet viverra libero. In malesuada congue ipsum vel semper. Curabitur vulputate, ligula et laoreet elementum, massa ipsum pulvinar erat, in dapibus nunc diam id libero. Duis eleifend accumsan consectetur. Praesent suscipit, magna in malesuada tincidunt, libero.</p>
-                  <div class="row">
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Full Post</a>
-                    </div>
-                    <div class="col text-right">
-                      <a href="#" class="card-link">Source</a>
                     </div>
                   </div>
                 </div>
@@ -206,17 +208,17 @@
 
 
           <div class="row justify-content-center">
-            <ul class="pagination mb-1 mt-0">
+            <ul class="pagination mb-1 mt-0" id="ppgr-nav-bot">
               <li class="page-item">
-                <a class="page-link bg-success" href="#" aria-label="Previous">
+                <a class="page-link bg-secondary" href="#" aria-label="Previous" id="ppgr-prev-2">
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link bg-success" href="#">1</a></li>
-              <li class="page-item"><a class="page-link bg-success" href="#">2</a></li>
-              <li class="page-item"><a class="page-link bg-success" href="#">3</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">1</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">2</a></li>
+              <li class="page-item"><a class="page-link bg-secondary" href="#">3</a></li>
               <li class="page-item">
-                <a class="page-link bg-success" href="#" aria-label="Next">
+                <a class="page-link bg-secondary" href="#" aria-label="Next" id="ppgr-next-2">
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>
