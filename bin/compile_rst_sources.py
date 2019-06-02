@@ -64,11 +64,9 @@ class PostMetadata():
 
 
 METADATA_FILE = 'metadata.json'  # File of metadata about the posts
-POSTS_FILE = 'posts.json'  # actual post metadata
 
 # {filename: json contents, ...}
-JSON_DATA = {METADATA_FILE: {'categories': [], 'tags': [], 'posts': []},
-             POSTS_FILE: {}}
+JSON_DATA = {METADATA_FILE: {'categories': [], 'tags': [], 'ids': [], 'posts': {}}}
 
 
 def main():
@@ -84,6 +82,8 @@ def main():
 
     # sort post lists chronologically with newest first
     for key in JSON_DATA[METADATA_FILE]:
+        if key in ['posts']:
+            continue
         reversed = False if key in ['tags', 'categories'] else True
         JSON_DATA[METADATA_FILE][key].sort(reverse=reversed)
 
@@ -154,25 +154,19 @@ def gather_data(docinfo):
     global JSON_DATA
     post = PostMetadata(**docinfo)
 
-    JSON_DATA[POSTS_FILE][post.id] = post.json()
+    # don't gather json data for posts with no category
+    if not post.category:
+        return
+
+    JSON_DATA[METADATA_FILE]['posts'][post.id] = post.json()
+    JSON_DATA[METADATA_FILE]['ids'].append(post.id)
 
     for tag in post.tags:
         if tag and tag not in JSON_DATA[METADATA_FILE]['tags']:
             JSON_DATA[METADATA_FILE]['tags'].append(tag)
-    JSON_DATA[METADATA_FILE]['posts'].append(post.id)
-
-    year = str(post.id)[:4] + ".json"
-    if year in JSON_DATA:
-        JSON_DATA[year][post.id] = post.json()
-    else:
-        JSON_DATA[year] = {post.id: [post.json()]}
 
     if post.category:  # ignore posts with no category (i.e. about.rst)
         category = post.category + '.json'
-        if category in JSON_DATA:
-            JSON_DATA[category][post.id] = post.json()
-        else:
-            JSON_DATA[category] = {post.id: [post.json()]}
         if post.category not in JSON_DATA[METADATA_FILE]['categories']:
             JSON_DATA[METADATA_FILE]['categories'].append(post.category)
         if post.category in JSON_DATA[METADATA_FILE]:
