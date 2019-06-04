@@ -8,11 +8,17 @@ def dispatch(**kwargs):
     dist = Path('./dist')
     jobs = [
         ('index.html',
-         {'title': 'home', 'date': now},
+         {'title': 'Home', 'date': now, 'active_nav': 'index'},
          dist.joinpath('index.html')),
-        # ('projects.html',
-        #  {'title': 'home', 'date': now},
-        #  'projects.html'),
+        ('projects.html',
+         {'title': 'Projects', 'date': now, 'active_nav': 'projects'},
+         dist.joinpath('projects.html')),
+        ('posts.html',
+         {'title': 'Posts', 'date': now, 'active_nav': 'posts'},
+         dist.joinpath('posts.html')),
+        ('about.html',
+         {'title': 'About', 'date': now, 'active_nav': 'about'},
+         dist.joinpath('about.html'))
     ]
 
     for template, context, outfile in jobs:
