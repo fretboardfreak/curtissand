@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <title>{% block title %}Curtis Sand: {{ title }}{% endblock %}</title>
+  <meta name="date" content="{{ date }}" />
+  <meta name="author" content="Curtis Sand" />
+  <link rel="stylesheet" href="./css/curtissand.css">
+  <link rel="icon" type="image/png" href="./images/logos/orange-initials-bg-dark.svg"/>
+  {% endblock %}
+</head>
+<body>
+  <div class="container-fluid no-gutters mt-4 mb-4" id="body">
+  {% block body %}
+
+    {% block navbar %}
+    <div class="row mx-auto no-gutters bg-dark sticky-top mt-4 mb-4">
+        <ul class="nav nav-tabs mx-auto">
+          <a class="navbar-brand d-none d-sm-block" href="index.html">
+            <img src="./images/logos/orange-initials-bg-dark.svg" width="30" height="30" alt="">
+          </a>
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="projects.html">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="posts.html">Posts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+    </div>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+    <div class="row pt-1">
+      <div class="col d-none d-md-block"></div>
+      <div class="col-md-8 text-right">
+        Copyright&nbsp;&#169;&nbsp;Curtis&nbsp;Sand&nbsp;2019
+      </div>
+      <div class="col d-none d-md-block"></div>
+    </div>
+    {% endblock %}
+
+  {% endblock %}
+  </div>
+{% block scripts %}
+<script type="text/javascript" src='./js/jquery.min.js'></script>
+<script type="text/javascript" src='./js/bootstrap.min.js'></script>
+<script>if (typeof $().emulateTransitionEnd != 'function') {console.log("bootstrap failed to load. ");}</script>
+<script type="text/javascript" src="./js/curtissand.js"></script>
+{% endblock %}
+</body>
+</html>
