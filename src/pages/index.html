@@ -1,66 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <title>Curtis Sand's Homepage</title>
-  <meta name="date" content="2019-05-10 08:00" />
-  <meta name="author" content="Curtis Sand" />
-  <link rel="stylesheet" href="./css/curtissand.css">
-  <link rel="icon" type="image/png" href="./images/logos/orange-initials-bg-dark.svg"/>
-</head>
-<body>
-  <div class="container-fluid no-gutters mt-4 mb-4" id="body"> <div class="row mx-auto no-gutters">
-      <div class="col d-none d-md-block"></div>
-      <div class="col d-flex align-items-center justify-content-center">
-        <img class="d-block img-fluid" style="max-height: 100px;" src="images/logos/orange-full.svg">
-      </div>
-      <div class="col d-flex align-items-center justify-content-center">
-        <ul class="flex-column" style="list-style: none;">
-          <li><a href="https://twitter.com/fretboardfreak?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @fretboardfreak</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
-          <li class="bg-primary pl-2"><a class="text-white" href="https://github.com/fretboardfreak"><img style="width: 25px;" src="images/icons/github.svg">&nbsp;fretboardfreak</a></li>
-          <li class="bg-primary pl-2"><a class="text-white" href="https://bitbucket.org/fret"><img style="width: 25px;" src="images/icons/bitbucket.svg">&nbsp;fret</a></li>
-        </ul>
-      </div>
-      <div class="col d-none d-md-block"></div>
+{% extends "base.html" %}
+{% block body %}
+  <div class="row mx-auto no-gutters">
+    <div class="col d-none d-md-block"></div>
+    <div class="col d-flex align-items-center justify-content-center">
+      <img class="d-block img-fluid" style="max-height: 100px;" src="images/logos/orange-full.svg">
     </div>
-
-    <div class="row mx-auto no-gutters bg-dark sticky-top mt-4 mb-4">
-        <ul class="nav nav-tabs mx-auto">
-          <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="projects.html">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="posts.html">Posts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-        </ul>
+    <div class="col d-flex align-items-center justify-content-center">
+      <ul class="flex-column" style="list-style: none;">
+        <li><a href="https://twitter.com/fretboardfreak?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @fretboardfreak</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+        <li class="bg-primary pl-2"><a class="text-white" href="https://github.com/fretboardfreak"><img style="width: 25px;" src="images/icons/github.svg">&nbsp;fretboardfreak</a></li>
+        <li class="bg-primary pl-2"><a class="text-white" href="https://bitbucket.org/fret"><img style="width: 25px;" src="images/icons/bitbucket.svg">&nbsp;fret</a></li>
+      </ul>
     </div>
-
-    <div class="row mx-auto no-gutters">
-      <div class="col d-flex justify-content-center">
-        <img class="d-block img-fluid" style="max-height: 400px;" src="images/180311-1930_1.svg">
-      </div>
-    </div>
-
-    <div class="row pt-1">
-      <div class="col d-none d-md-block"></div>
-      <div class="col-md-8 text-right">
-        Copyright&nbsp;&#169;&nbsp;Curtis&nbsp;Sand&nbsp;2019
-      </div>
-      <div class="col d-none d-md-block"></div>
-    </div>
-
+    <div class="col d-none d-md-block"></div>
   </div>
-<script type="text/javascript" src='./js/jquery.min.js'></script>
-<script type="text/javascript" src='./js/bootstrap.min.js'></script>
-<script>if (typeof $().emulateTransitionEnd != 'function') {console.log("bootstrap failed to load. ");}</script>
-<script type="text/javascript" src="./js/curtissand.js"></script>
-</body>
-</html>
+
+  {{ super() }}
+{% endblock %}
+
+{% block navbar %}
+<div class="row mx-auto no-gutters bg-dark sticky-top mt-4 mb-4">
+  <ul class="nav nav-tabs mx-auto">
+    <li class="nav-item">
+      <a class="nav-link active" href="index.html">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="projects.html">Projects</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="posts.html">Posts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="about.html">About</a>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="row mx-auto no-gutters">
+  <div class="col d-flex justify-content-center">
+    <img class="d-block img-fluid" style="max-height: 400px;" src="images/180311-1930_1.svg">
+  </div>
+</div>
+{% endblock %}
