@@ -17,22 +17,32 @@
   {% block body %}
 
     {% block navbar %}
+    {% set index, projects, posts, about = ' active', '', '', '' %}
+    {% if active_nav == "index" %}
+      {% set index, projects, posts, about = ' active', '', '', '' %}
+    {% elif active_nav == "projects" %}
+      {% set index, projects, posts, about = '', ' active', '', '' %}
+    {% elif active_nav == "posts" %}
+      {% set index, projects, posts, about = '', '', ' active', '' %}
+    {% elif active_nav == "about" %}
+      {% set index, projects, posts, about = '', '', '', ' active' %}
+    {% endif %}
     <div class="row mx-auto no-gutters bg-dark sticky-top mt-4 mb-4">
         <ul class="nav nav-tabs mx-auto">
           <a class="navbar-brand d-none d-sm-block" href="index.html">
             <img src="./images/logos/orange-initials-bg-dark.svg" width="30" height="30" alt="">
           </a>
           <li class="nav-item">
-            <a class="nav-link active" href="index.html">Home</a>
+            <a class="nav-link{{ index }}" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="projects.html">Projects</a>
+            <a class="nav-link{{ projects }}" href="projects.html">Projects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="posts.html">Posts</a>
+            <a class="nav-link{{ posts }}" href="posts.html">Posts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
+            <a class="nav-link{{ about }}" href="about.html">About</a>
           </li>
         </ul>
     </div>
