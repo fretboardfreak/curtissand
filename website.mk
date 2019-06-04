@@ -167,8 +167,7 @@ python-venv :
 # html targets
 
 html : dist
-	find $(HTML) -iname "*.html" \
-		-exec rsync -haP --no-whole-file --inplace '{}' $(DIST)/ ';'
+	$(PYVENV)/bin/skabelon --templates $(HTML) --dispatch src/skabelon/dispatch.py
 	date > html
 
 static : dist cssdist jsdist
