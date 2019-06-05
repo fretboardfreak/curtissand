@@ -8,8 +8,8 @@
   <title>{% block title %}Curtis Sand: {{ title }}{% endblock %}</title>
   <meta name="date" content="{{ date }}" />
   <meta name="author" content="Curtis Sand" />
-  <link rel="stylesheet" href="./css/curtissand.css">
-  <link rel="icon" type="image/png" href="./images/logos/orange-initials-bg-dark.svg"/>
+  <link rel="stylesheet" href="{{ host }}/css/curtissand.css">
+  <link rel="icon" type="image/png" href="{{ host }}/images/logos/orange-initials-bg-dark.svg"/>
   {% endblock %}
 </head>
 <body>
@@ -30,19 +30,19 @@
     <div class="row mx-auto no-gutters bg-dark sticky-top mt-4 mb-4">
         <ul class="nav nav-tabs mx-auto">
           <a class="navbar-brand d-none d-sm-block" href="index.html">
-            <img src="./images/logos/orange-initials-bg-dark.svg" width="30" height="30" alt="">
+            <img src="{{ host }}/images/logos/orange-initials-bg-dark.svg" width="30" height="30" alt="">
           </a>
           <li class="nav-item">
-            <a class="nav-link{{ index }}" href="index.html">Home</a>
+            <a class="nav-link{{ index }}" href="{{ host }}/index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ projects }}" href="projects.html">Projects</a>
+            <a class="nav-link{{ projects }}" href="{{ host }}/projects.html">Projects</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ posts }}" href="posts.html">Posts</a>
+            <a class="nav-link{{ posts }}" href="{{ host }}/posts.html">Posts</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link{{ about }}" href="about.html">About</a>
+            <a class="nav-link{{ about }}" href="{{ host }}/about.html">About</a>
           </li>
         </ul>
     </div>
@@ -63,10 +63,10 @@
   {% endblock %}
   </div>
 {% block scripts %}
-<script type="text/javascript" src='./js/jquery.min.js'></script>
-<script type="text/javascript" src='./js/bootstrap.min.js'></script>
+<script type="text/javascript" src='{{ host }}/js/jquery.min.js'></script>
+<script type="text/javascript" src='{{ host }}/js/bootstrap.min.js'></script>
 <script>if (typeof $().emulateTransitionEnd != 'function') {console.log("bootstrap failed to load. ");}</script>
-<script type="text/javascript" src="./js/curtissand.js"></script>
+<script type="text/javascript" src="{{ host }}/js/curtissand.js"></script>
 {% endblock %}
 </body>
 </html>
