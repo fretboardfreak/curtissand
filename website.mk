@@ -57,6 +57,10 @@ help :
 	@echo "    link-sources : Create symlinks to media or other source files."
 	@echo "    clean-source-links : Remove media and source file symlinks."
 	@echo "    build-sources : Copy all files needed for "
+	@echo "    compile-rst : Compile the RST source files into HTML."
+	@echo "    dist-sources : Move built sources into the dist dir."
+	@echo "    build-pages : Build the html pages from the compiled sources."
+	@echo "    dist-pages : Move built pages into the dist dir."
 	@echo "--- ---- ---"
 
 
