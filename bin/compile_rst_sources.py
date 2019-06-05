@@ -11,6 +11,7 @@ import argparse
 import os
 import sys
 import json
+import shutil
 from pathlib import Path
 from xml.etree.ElementTree import fromstring
 
@@ -25,14 +26,13 @@ DEBUG = False
 
 class PostMetadata():
     def __init__(self, category, tags, summary, date, title,
-                 title_f, body_f, source, **kwargs):
+                 html, source, **kwargs):
         self.category = category
         self.tags = tags
         self.summary = summary
         self.date = date
         self.title = title
-        self.title_f = title_f
-        self.body_f = body_f
+        self.html = html
         self.source = source
         self.sanitize_tags()
         self.id = str(int(self.date.replace('-', '').replace(' ', '').replace(':', '')))
@@ -58,8 +58,7 @@ class PostMetadata():
             "summary": self.summary,
             "date": self.date,
             "title": self.title,
-            "title_f": self.title_f,
-            "body_f": self.body_f,
+            "html": self.html,
             "source": self.source}
 
 
@@ -111,9 +110,7 @@ def visit_file(src_file, root):
             not src_file.is_file() or
             not src_file.suffix in ['.rst', '.RST']):
         return
-    fname = src_file.name[:-len(src_file.suffix)]  # remove suffix
-    title = Path(*src_file.parts[:-1], fname + '_title.html')
-    body = Path(*src_file.parts[:-1], fname + '_body.html')
+    fname = src_file.with_suffix('.html')
 
     vprint(src_file)
     info = get_docinfo(src_file)
@@ -121,18 +118,18 @@ def visit_file(src_file, root):
 
     parts = publish_parts(src_file.read_text(), writer_name='html')
 
-    dprint('  writing section title to %s' % title)
-    with open(title, 'w') as fout:
-        fout.write(parts['title'])
     info['title'] = parts['title']
-    info['title_f'] = str(title.relative_to(root))
 
-    dprint('  writing section body to %s' % body)
-    with open(body, 'w') as fout:
-        fout.write('<p>%s</p>\n%s' % (info['summary'], parts['body']))
-    info['body_f'] = str(body.relative_to(root))
+    dprint('  writing to %s' % fname)
+    with open(fname, 'w') as fout:
+        fout.write('%s\n<p>%s</p>\n%s' %
+                   (parts['html_title'], info['summary'], parts['body']))
+    # info['html'] = str(fname.relative_to(root))
+    info['html'] = str(Path('pages', fname.relative_to(root)))
 
-    info['source'] = str(src_file.relative_to(root))
+    # convert *.rst files to *.txt so browsers can server them correctly
+    info['source'] = str(src_file.relative_to(root).with_suffix('.txt'))
+    shutil.move(src_file, src_file.with_suffix('.txt'))
     gather_data(info)
 
 
