@@ -32,6 +32,8 @@ __pycache__
 /build-sources
 /compile-rst
 /dist-sources
+/build-pages
+/dist-pages
 
 # use abbr name to avoid collision with images dir
 /imgs
