@@ -1,4 +1,4 @@
-"""Skabelon dispatch script for curtissand.com."""
+"""Skabelon dispatch script for the static pages of curtissand.com."""
 from pathlib import Path
 from time import strftime
 
