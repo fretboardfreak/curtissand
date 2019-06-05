@@ -98,7 +98,7 @@ export class PostsPager {
     post_html += '</div></div></h6>';
     post_html += '<p class="card-text">' + post_details.summary + '</p>';
     post_html += '<div class="row"><div class="col text-right">';
-    post_html += '<a href="#" class="card-link">Full Post</a>'; // TODO: update link to full post page
+    post_html += '<a href="' + post_details.html + '" class="card-link">Full Post</a>'; // TODO: update link to full post page
     post_html += '</div><div class="col text-right">';
     post_html += '<a href="./sources/' + post_details.source + '" class="card-link">Source</a>';
     post_html += '</div></div></div></div></div>';
