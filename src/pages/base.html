@@ -17,7 +17,7 @@
   {% block body %}
 
     {% block navbar %}
-    {% set index, projects, posts, about = ' active', '', '', '' %}
+    {% set index, projects, posts, about = '', '', '', '' %}
     {% if active_nav == "index" %}
       {% set index, projects, posts, about = ' active', '', '', '' %}
     {% elif active_nav == "projects" %}
