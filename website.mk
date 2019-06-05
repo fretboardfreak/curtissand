@@ -62,7 +62,7 @@ help :
 
 # overall build targets
 
-all : html css js static images dist-sources
+all : html css js static images dist-sources dist-pages
 	date > all
 
 .PHONY: rebuild
@@ -79,12 +79,12 @@ run :
 
 .PHONY: clean-build
 clean-build :
-	rm -rf $(BUILD) css-compile css-prefix css all
+	rm -rf $(BUILD) css-compile css-prefix css all build-sources build-pages
 
 .PHONY: clean-dist
 clean-dist :
 	rm -rf $(DIST) css-prefix css all js jqueryjs bootstrapjs \
-		cssdist jsdist static imgs html dist-sources
+		cssdist jsdist static imgs html dist-sources dist-pages
 
 .PHONY: clean-npm
 clean-npm :
@@ -167,7 +167,9 @@ python-venv :
 # html targets
 
 html : dist
-	$(PYVENV)/bin/skabelon --templates $(HTML) --dispatch src/skabelon/dispatch.py
+	$(PYVENV)/bin/skabelon --templates $(HTML) \
+		--dispatch src/skabelon/static_pages.py \
+		--dispatch-opt host:$(HOST)
 	date > html
 
 static : dist cssdist jsdist
@@ -239,5 +241,21 @@ compile-rst : build-sources
 
 dist-sources : compile-rst dist
 	mkdir -p $(SOURCES_DIST)
-	rsync -haLP $(SOURCES_BUILD)/* $(SOURCES_DIST)
+	rsync -haLP --exclude "*.html" $(SOURCES_BUILD)/* $(SOURCES_DIST)
+	rsync -haLP $(SOURCES_BUILD)/projects.html $(SOURCES_DIST)
+	rsync -haLP $(SOURCES_BUILD)/about.html $(SOURCES_DIST)
 	date > dist-sources
+
+build-pages : build build-sources
+	mkdir -p $(PAGES_BUILD)
+	$(PYVENV)/bin/skabelon --templates $(HTML) \
+		--dispatch src/skabelon/posts.py \
+		--dispatch-opt sources:$(SOURCES_BUILD) \
+		--dispatch-opt dest:$(PAGES_BUILD) \
+		--dispatch-opt host:$(HOST)
+	date > build-pages
+
+dist-pages : build-pages dist
+	mkdir -p $(PAGES_DIST)
+	rsync -haLP $(PAGES_BUILD)/* $(PAGES_DIST)
+	date > dist-pages

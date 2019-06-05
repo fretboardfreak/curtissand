@@ -45,6 +45,11 @@ SOURCES = $$(pwd)/sources
 SOURCES_BUILD = $(BUILD)/sources
 SOURCES_DIST = $(DIST)/sources
 
+PAGES_BUILD = $(BUILD)/pages
+PAGES_DIST = $(DIST)/pages
+
+HOST = http://localhost
+
 DEPLOY_DEST = curtsan2@curtissand.com:~/www/new/
 
 include website.mk
