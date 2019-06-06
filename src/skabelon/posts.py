@@ -1,10 +1,12 @@
 """Skabelon dispatch script for the posts of curtissand.com."""
 
 import os
+import json
 from pathlib import Path
 from time import strftime
 
 HOST = None
+METADATA = None
 
 
 def dispatch(**kwargs):
@@ -23,6 +25,14 @@ def dispatch(**kwargs):
         raise Exception('posts.py dispatch script requires a "dest" '
                         'dispatch option.')
     dest = Path(kwargs['dest'])
+
+    if 'metadata' not in kwargs:
+        raise Exception('posts.py dispatch script requires a "metadata" '
+                        'JSON file as a dispatch option.')
+    metadata = kwargs['metadata']
+    global METADATA
+    with open(metadata, 'r') as fin:
+        METADATA = json.load(fin)
 
     yield from visit_dir(sources, root=sources, dest=dest)
 
@@ -46,10 +56,23 @@ def visit_file(src_file, root, dest):
             not src_file.suffix in ['.html']):
         return
 
-    now = strftime('%Y-%m-%d %H:%M')
+    print('rendering file: %s' % src_file.relative_to(root))
+    file_metadata = None
+    for post_data in METADATA["posts"].values():
+        post_fname = Path(post_data['html']).name
+        if post_data['html'].endswith(str(src_file.relative_to(root))):
+            file_metadata = post_data
+            break
+    if not file_metadata:
+        print('No metadata available for %s. Skipping file!' % str(src_file))
+        return
+
     template_name = 'post.html'
-    context = {'title': None, 'date': now, 'active_nav': None,
-               'host': 'http://localhost'}
+    context = {'title': file_metadata['title'],
+               'date': file_metadata['date'],
+               'active_nav': None,
+               'host': HOST,
+               'metadata': file_metadata}
     with open(src_file, 'r') as fin:
         context['content'] = fin.read()
 
