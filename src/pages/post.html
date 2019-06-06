@@ -5,6 +5,26 @@
   <div class="col-md-8">
     <div class="container-fluid bg-light border rounded py-3">
       <div class="card bg-secondary rounded border">
+        <h2 class="card-title text-center mt-3">{{ metadata['title'] }}</h2>
+        <div class="row">
+          <div class="col text-right">
+            <a href="{{ host }}/sources/{{ metadata['source'] }}" class="card-link">Source</a>
+          </div>
+        </div>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <div class="row">
+            <div class="col">
+              <span class="badge badge-pill badge-success px-3">{{ metadata['category'] }}</span>
+              {{ metadata['date'] }}
+            </div>
+            <div class="col">
+              <span class="pl-3">Tags:&nbsp;</span>
+              {% for tag in metadata['tags'] %}
+              <span class="badge badge-pill badge-info">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </h6>
         <div class="card-body">{{ content }}</div>
       </div>
     </div>
