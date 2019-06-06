@@ -131,8 +131,7 @@ def visit_file(src_file, root):
 
     dprint('  writing to %s' % fname)
     with open(fname, 'w') as fout:
-        fout.write('%s\n<p>%s</p>\n%s' %
-                   (parts['html_title'], info['summary'], parts['body']))
+        fout.write('<p>%s</p>\n%s' % (info['summary'], parts['body']))
     # info['html'] = str(fname.relative_to(root))
     info['html'] = str(Path('pages', fname.relative_to(root)))
 
