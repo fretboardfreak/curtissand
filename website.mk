@@ -250,13 +250,14 @@ dist-sources : compile-rst dist
 	rsync -haLP $(SOURCES_BUILD)/about.html $(SOURCES_DIST)
 	date > dist-sources
 
-build-pages : build build-sources
+build-pages : build build-sources compile-rst
 	mkdir -p $(PAGES_BUILD)
 	$(PYVENV)/bin/skabelon --templates $(HTML) \
 		--dispatch src/skabelon/posts.py \
 		--dispatch-opt sources:$(SOURCES_BUILD) \
 		--dispatch-opt dest:$(PAGES_BUILD) \
-		--dispatch-opt host:$(HOST)
+		--dispatch-opt host:$(HOST) \
+		--dispatch-opt metadata:$(SOURCES_BUILD)/metadata.json
 	date > build-pages
 
 dist-pages : build-pages dist
