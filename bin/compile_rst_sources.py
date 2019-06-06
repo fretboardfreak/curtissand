@@ -23,6 +23,11 @@ VERSION = "0.1"
 VERBOSE = False
 DEBUG = False
 
+METADATA_FILE = 'metadata.json'  # File of metadata about the posts
+
+# {filename: json contents, ...}
+JSON_DATA = {METADATA_FILE: {'categories': [], 'tags': [], 'ids': [], 'posts': {}}}
+
 
 class PostMetadata():
     def __init__(self, category, tags, summary, date, title,
@@ -35,7 +40,18 @@ class PostMetadata():
         self.html = html
         self.source = source
         self.sanitize_tags()
+        self._set_id()
+
+    def _set_id(self):
+        """Set the post's ID while ensuring uniqueness."""
         self.id = str(int(self.date.replace('-', '').replace(' ', '').replace(':', '')))
+        if self.id in JSON_DATA[METADATA_FILE]['ids']:
+            test_suffix = 0
+            new_id = '%s%02d' % (self.id, test_suffix)
+            while new_id in JSON_DATA[METADATA_FILE]['ids']:
+                test_suffix += 1
+                new_id = '%s%02d' % (self.id, test_suffix)
+            self.id = new_id
 
     def __repr__(self):
         return 'PostMetadata{date: %s, title: %s}' % (self.date, self.title)
@@ -60,12 +76,6 @@ class PostMetadata():
             "title": self.title,
             "html": self.html,
             "source": self.source}
-
-
-METADATA_FILE = 'metadata.json'  # File of metadata about the posts
-
-# {filename: json contents, ...}
-JSON_DATA = {METADATA_FILE: {'categories': [], 'tags': [], 'ids': [], 'posts': {}}}
 
 
 def main():
@@ -114,7 +124,6 @@ def visit_file(src_file, root):
 
     vprint(src_file)
     info = get_docinfo(src_file)
-    dprint('  docinfo: %s' % info)
 
     parts = publish_parts(src_file.read_text(), writer_name='html')
 
@@ -130,6 +139,7 @@ def visit_file(src_file, root):
     # convert *.rst files to *.txt so browsers can server them correctly
     info['source'] = str(src_file.relative_to(root).with_suffix('.txt'))
     shutil.move(src_file, src_file.with_suffix('.txt'))
+    dprint('  docinfo: %s' % info)
     gather_data(info)
 
 
