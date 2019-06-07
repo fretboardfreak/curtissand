@@ -10,6 +10,10 @@ METADATA = None
 IMAGES_DIR = None
 
 
+class NoImageDirException(Exception):
+    pass
+
+
 def dispatch(**kwargs):
     if 'host' not in kwargs:
         raise Exception('posts.py dispatch script requires a "host" '
@@ -73,8 +77,12 @@ def visit_file(src_file, root, dest):
         print('No metadata available for %s. Skipping file!' % str(src_file))
         return
 
-    template_name, context = get_template_and_context(
-        src_file, file_metadata, root)
+    try:
+        template_name, context = get_template_and_context(
+            src_file, file_metadata, root)
+    except NoImageDirException:
+        print('No image dir matching gallery: %s' % str(src_file))
+        return
 
     outfile = Path(dest, src_file.relative_to(root))
     if not outfile.parent.exists():
@@ -99,6 +107,7 @@ def get_template_and_context(src_file, file_metadata, root):
         template_name = 'gallery.html'
         context['images'] = get_gallery_images(src_file)
 
+
     return template_name, context
 
 
@@ -109,6 +118,9 @@ def get_gallery_images(src_file):
     for child in IMAGES_DIR.iterdir():
         if child.name == src_file.stem:
             break  # exit this loop leaving child set to the matched dir
+    else:
+        raise NoImageDirException('no image dir matching this gallery.')
+
     # walk through all files inside the image dir
     for img_root, dirnames, fnames in os.walk(child):
         if len(fnames) == 0:

@@ -120,9 +120,16 @@ def visit_file(src_file, root):
             not src_file.is_file() or
             not src_file.suffix in ['.rst', '.RST']):
         return
+
+    if "galleries" in src_file.parts:
+        img_dir = Path("./images", src_file.stem)
+        if not img_dir.exists():
+            vprint('Gallery has no image directory. Skipping.')
+            return
+
     fname = src_file.with_suffix('.html')
 
-    vprint(src_file)
+    vprint("Compiling: %s" % str(src_file))
     info = get_docinfo(src_file)
 
     parts = publish_parts(src_file.read_text(), writer_name='html')
