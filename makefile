@@ -59,8 +59,8 @@ include website.mk
 
 .PHONY: deploy
 deploy :
-	rsync -haLP --no-whole-file --inplace --exclude images $(DIST)/* $(DEPLOY_DEST)
+	rsync -haLP --exclude images $(DIST)/* $(DEPLOY_DEST)
 
 .PHONY: deploy-images
 deploy-images :
-	rsync -haLP --no-whole-file --inplace $(IMAGES) $(DEPLOY_DEST)
+	rsync -haLP $(IMAGES) $(DEPLOY_DEST)
