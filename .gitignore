@@ -34,6 +34,7 @@ __pycache__
 /dist-sources
 /build-pages
 /dist-pages
+/lightbox
 
 # use abbr name to avoid collision with images dir
 /imgs
