@@ -179,12 +179,12 @@ html : dist
 
 static : dist cssdist jsdist
 	test -d $(STATIC) && \
-		rsync -haP --no-whole-file --inplace $(STATIC)/* $(STATIC_DIST)/ || true
+		rsync -ha --no-whole-file --inplace $(STATIC)/* $(STATIC_DIST)/ || true
 	date > static
 
 images : dist link-sources
 	test -d $(IMAGES) && \
-		rsync -haP --no-whole-file --inplace $(IMAGES) $(DIST) || true
+		rsync -ha --no-whole-file --inplace $(IMAGES) $(DIST) || true
 	date > imgs
 
 # css targets
@@ -237,7 +237,7 @@ clean-source-links :
 
 build-sources : build link-sources
 	mkdir -p $(SOURCES_BUILD)
-	rsync -haLP --exclude "*.txt" $(SOURCES)/* $(SOURCES_BUILD)
+	rsync -haL --exclude "*.txt" $(SOURCES)/* $(SOURCES_BUILD)
 	date > build-sources
 
 compile-rst : build-sources
@@ -246,9 +246,9 @@ compile-rst : build-sources
 
 dist-sources : compile-rst dist
 	mkdir -p $(SOURCES_DIST)
-	rsync -haLP --exclude "*.html" $(SOURCES_BUILD)/* $(SOURCES_DIST)
-	rsync -haLP $(SOURCES_BUILD)/projects.html $(SOURCES_DIST)
-	rsync -haLP $(SOURCES_BUILD)/about.html $(SOURCES_DIST)
+	rsync -haL --exclude "*.html" $(SOURCES_BUILD)/* $(SOURCES_DIST)
+	rsync -haL $(SOURCES_BUILD)/projects.html $(SOURCES_DIST)
+	rsync -haL $(SOURCES_BUILD)/about.html $(SOURCES_DIST)
 	date > dist-sources
 
 build-pages : build build-sources compile-rst
@@ -264,7 +264,7 @@ build-pages : build build-sources compile-rst
 
 dist-pages : build-pages dist
 	mkdir -p $(PAGES_DIST)
-	rsync -haLP $(PAGES_BUILD)/* $(PAGES_DIST)
+	rsync -haL $(PAGES_BUILD)/* $(PAGES_DIST)
 	date > dist-pages
 
 lightbox : cssdist jsdist images
