@@ -51,12 +51,16 @@ SOURCES_DIST = $(DIST)/sources
 PAGES_BUILD = $(BUILD)/pages
 PAGES_DIST = $(DIST)/pages
 
-HOST = http://localhost
+HOST = http://curtissand.com
 
 DEPLOY_DEST = curtsan2@curtissand.com:~/www/
 
 include website.mk
 
 .PHONY: deploy
-deploy: all
-	rsync -haLP --no-whole-file --inplace $(DIST)/* $(DEPLOY_DEST)
+deploy :
+	rsync -haLP --no-whole-file --inplace --exclude images $(DIST)/* $(DEPLOY_DEST)
+
+.PHONY: deploy-images
+deploy-images :
+	rsync -haLP --no-whole-file --inplace $(IMAGES) $(DEPLOY_DEST)
