@@ -53,7 +53,7 @@ PAGES_DIST = $(DIST)/pages
 
 HOST = http://localhost
 
-DEPLOY_DEST = curtsan2@curtissand.com:~/www/new/
+DEPLOY_DEST = curtsan2@curtissand.com:~/www/
 
 include website.mk
 
