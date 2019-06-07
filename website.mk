@@ -66,7 +66,7 @@ help :
 
 # overall build targets
 
-all : html css js static images dist-sources dist-pages
+all : html css js static images dist-sources dist-pages lightbox
 	date > all
 
 .PHONY: rebuild
@@ -88,7 +88,7 @@ clean-build :
 .PHONY: clean-dist
 clean-dist :
 	rm -rf $(DIST) css-prefix css all js jqueryjs bootstrapjs \
-		cssdist jsdist static imgs html dist-sources dist-pages
+		cssdist jsdist static imgs html dist-sources dist-pages lightbox
 
 .PHONY: clean-npm
 clean-npm :
@@ -155,6 +155,7 @@ install-npm :
 	npm --prefix $(NODE_PKG) install -D rollup-plugin-inject
 	npm --prefix $(NODE_PKG) install -D rollup-plugin-node-resolve
 	npm --prefix $(NODE_PKG) install -D stylelint
+	npm --prefix $(NODE_PKG) install -D lightbox2
 	date > install-npm
 
 install-py : python-venv
@@ -257,10 +258,19 @@ build-pages : build build-sources compile-rst
 		--dispatch-opt sources:$(SOURCES_BUILD) \
 		--dispatch-opt dest:$(PAGES_BUILD) \
 		--dispatch-opt host:$(HOST) \
-		--dispatch-opt metadata:$(SOURCES_BUILD)/metadata.json
+		--dispatch-opt metadata:$(SOURCES_BUILD)/metadata.json \
+		--dispatch-opt images:$(IMAGES)
 	date > build-pages
 
 dist-pages : build-pages dist
 	mkdir -p $(PAGES_DIST)
 	rsync -haLP $(PAGES_BUILD)/* $(PAGES_DIST)
 	date > dist-pages
+
+lightbox : cssdist jsdist images
+	cp $(LIGHTBOX_CSS) $(CSS_DIST)
+	cp $(LIGHTBOX_JS) $(JS_DIST)
+	# put the four lightbox images into images dir
+	# since dist/images is a symlink these files will persist, oh well
+	cp $(LIGHTBOX_IMAGES) $(IMAGES)
+	date > lightbox

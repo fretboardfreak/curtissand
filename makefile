@@ -40,6 +40,9 @@ JQUERY_JS = $(NODE)/jquery/dist/jquery.min.js
 ESLINT = $(NODE)/eslint/bin/eslint.js
 PYTHON_REQUIRES = $$(pwd)/requirements.txt
 PYVENV = $$(pwd)/pyvenv
+LIGHTBOX_CSS = $(NODE)/lightbox2/dist/css/lightbox.min.css
+LIGHTBOX_JS = $(NODE)/lightbox2/dist/js/lightbox.min.*
+LIGHTBOX_IMAGES = $(NODE)/lightbox2/dist/images/*
 
 SOURCES = $$(pwd)/sources
 SOURCES_BUILD = $(BUILD)/sources
