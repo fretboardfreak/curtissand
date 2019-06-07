@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %}
+  {{ super () }}
+  <link rel="stylesheet" href="{{ host }}/css/lightbox.min.css">
+{% endblock %}
+{% block content %}
+<div class="row mx-auto no-gutters mt-5">
+  <div class="col d-none d-md-block"></div>
+  <div class="col-md-8">
+    <div class="container-fluid bg-light border rounded py-3">
+      <div class="card bg-secondary rounded border">
+        <h2 class="card-title text-center mt-3">{{ metadata['title'] }}</h2>
+        <div class="row">
+          <div class="col text-right">
+            <a href="{{ host }}/sources/{{ metadata['source'] }}" class="card-link">Source</a>
+          </div>
+        </div>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <div class="row">
+            <div class="col">
+              <span class="badge badge-pill badge-success px-3">{{ metadata['category'] }}</span>
+              {{ metadata['date'] }}
+            </div>
+            <div class="col">
+              <span class="pl-3">Tags:&nbsp;</span>
+              {% for tag in metadata['tags'] %}
+              <span class="badge badge-pill badge-info">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </h6>
+        <div class="card-body">
+          {{ content }}
+          <div class="col mx-auto">
+          {% for image, thumb in images %}
+            {% if thumb %}
+            <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery"><img class="d-block img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ thumb }}"/></a>
+            {% else %}
+            <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery"><img class="d-block img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ image }}"/></a>
+            {% endif %}
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col d-none d-md-block"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+  {{ super() }}
+  <script type="text/javascript" src="{{ host }}/js/lightbox.min.js"></script>
+{% endblock %}
