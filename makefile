@@ -63,4 +63,4 @@ deploy :
 
 .PHONY: deploy-images
 deploy-images :
-	rsync -haLP $(IMAGES) $(DEPLOY_DEST)
+	rsync -haLP $(IMAGES)/* $(DEPLOY_DEST)/images/
