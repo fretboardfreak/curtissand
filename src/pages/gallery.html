@@ -31,14 +31,20 @@
         </h6>
         <div class="card-body">
           {{ content }}
-          <div class="col mx-auto">
-          {% for image, thumb in images %}
-            {% if thumb %}
-            <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery"><img class="d-block img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ thumb }}"/></a>
-            {% else %}
-            <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery"><img class="d-block img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ image }}"/></a>
-            {% endif %}
-          {% endfor %}
+          <div class="row">
+            <div class="col text-center d-flex flex-wrap justify-content-center">
+            {% for image, thumb in images %}
+              {% if thumb %}
+              <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery">
+                <img class="img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ thumb }}"/>
+              </a>
+              {% else %}
+              <a class="text-center" href="{{ host }}/images/{{ image }}" data-lightbox="gallery">
+                <img class="img-fluid" style="max-height: 250px;" src="{{ host }}/images/{{ image }}"/>
+              </a>
+              {% endif %}
+            {% endfor %}
+            </div>
           </div>
         </div>
       </div>
