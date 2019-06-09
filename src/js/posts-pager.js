@@ -21,6 +21,7 @@ export class PostsPager {
 
   // Register click events for the pager controls
   static register_pager_events(instance) {
+    $("#apply-filter").click(function(){instance.apply_filter();})
     $("#ppgr-next").click(function(){instance.next_page();});
     $("#ppgr-next-2").click(function(){instance.next_page();});
     $("#ppgr-prev").click(function(){instance.previous_page();});
@@ -53,6 +54,10 @@ export class PostsPager {
     return Math.floor(this.index / this.items_per_page);
   }
 
+  last_page () {
+    return Math.floor(this.metadata.ids.length / this.items_per_page)
+  }
+
   load_index_from_page_cookie () {
     var index_string = this.cookies['page'].get();
     if (index_string == "") {
@@ -68,7 +73,10 @@ export class PostsPager {
 
   // Load filter elements from tags and category lists in metadata
   load_filter_elements () {
-    console.log('PostsPager.load_filter_elements not implemented.');
+    var last_page_index = this.last_page();
+    $('#page_chooser').attr('max', last_page_index);
+    $('#page_chooser').val(this.page());
+    $('#page_count').text(last_page_index);
   }
 
   // find a list of post ids based on the filter settings
@@ -119,7 +127,9 @@ export class PostsPager {
 
   // Update the posts summary when page index or filter settings change
   update() {
+
     this.set_page_cookie();
+    $("#page_chooser").val(this.page());
 
     // get the list of post ids for the page
     var post_ids = this.get_post_ids();
@@ -154,5 +164,19 @@ export class PostsPager {
       this.index = 0;
       this.update();
     }
+  }
+
+  // Apply changes to the filters and update.
+  apply_filter () {
+    console.log('Applying Filters...');
+    var page_val = Number($("#page_chooser").val());
+    if (page_val < 0) {
+      page_val = 0;
+    } else if (page_val > this.last_page()) {
+      page_val = this.last_page();
+    }
+    this.index = page_val * this.items_per_page;
+
+    this.update();
   }
 }
