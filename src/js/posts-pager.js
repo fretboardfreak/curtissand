@@ -104,22 +104,40 @@ export class PostsPager {
   // </div>
   render_posts(dest_id, post_details) {
     console.log('rendering post: ' + dest_id);
-    var post_html = '<div class="container-fluid"><div class="card bg-secondary w-80"><div class="card-body">';
-    post_html += '<h5 class="card-title">' + post_details.title + '</h5>';
-    post_html += '<h6 class="card-subtitle mb-2 text-muted"><div class="row"><div class="col">'
-    post_html += '<span class="badge badge-pill badge-success px-3">' + post_details.category + '</span>';
-    post_html += '<span>' + post_details.date + '</span>';
-    post_html += '</div><div class="col"><span class="pl-3">Tags:&nbsp;</span>';
+    var post_html = '' +
+      '<div class="container-fluid">' +
+        '<div class="card bg-secondary w-80">' +
+          '<div class="card-body">' +
+            '<h5 class="card-title">' +
+              '<a href="' + post_details.html + '" class="text-light">' + post_details.title + '</a>' +
+            '</h5>' +
+            '<h6 class="card-subtitle mb-2 text-muted">' +
+              '<div class="row">' +
+                '<div class="col">' +
+                  '<span class="badge badge-pill badge-success mx-3">' + post_details.category + '</span>' +
+                  '<span>' + post_details.date + '</span>' +
+                '</div>' +
+                '<div class="col">' +
+                  '<span class="pl-3">Tags:&nbsp;</span>';
     for (var i = 0; i < post_details.tags.length; i += 1) {
       post_html += '<span class="badge badge-pill badge-info">' + post_details.tags[i] + '</span>';
     }
-    post_html += '</div></div></h6>';
-    post_html += '<p class="card-text">' + post_details.summary + '</p>';
-    post_html += '<div class="row"><div class="col text-right">';
-    post_html += '<a href="' + post_details.html + '" class="card-link">Full Post</a>'; // TODO: update link to full post page
-    post_html += '</div><div class="col text-right">';
-    post_html += '<a href="./sources/' + post_details.source + '" class="card-link">Source</a>';
-    post_html += '</div></div></div></div></div>';
+    post_html += '' +
+                '</div>' +
+              '</div>' +
+            '</h6>' +
+            '<p class="card-text">' + post_details.summary + '</p>' +
+            '<div class="row">' +
+              '<div class="col text-right">' +
+                '<a href="' + post_details.html + '" class="card-link">Full Post</a>' +
+              '</div>' +
+              '<div class="col text-right">' +
+                '<a href="./sources/' + post_details.source + '" class="card-link">Source</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
     $('#' + dest_id).html(post_html);
   }
 
