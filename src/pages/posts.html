@@ -16,9 +16,15 @@
 
         <div id="filters_cont" class="collapse bg-secondary" aria-labelledby="filters_head" data-parent="#filters_accordion">
           <div id="filters" class="card-body mx-auto">
-            <div class="row justify-content-end">
-              <label for="page_chooser">Page:</label>
-              <input id="page_chooser" type='number' min=0 class='bg-light'/>&nbsp;/&nbsp;<span id="page_count"></span>
+            <div class="form-row justify-content-end">
+              <div class="col">
+                <label for="items_per_page">Items:</label>
+                <input id="items_per_page" type="number" min=5 step=5 max=50 class='bg-light' style='max-width: 3rem;'/>
+              </div>
+              <div class="col">
+                <label for="page_chooser">Page:</label>
+                <input id="page_chooser" type='number' min=0 class='bg-light' style='max-width: 3rem;'/>&nbsp;/&nbsp;<span id="page_count"></span>
+              </div>
             </div>
             <div class="row justify-content-end">
               <button id="apply-filter" class="btn btn-link text-light">Apply</button>

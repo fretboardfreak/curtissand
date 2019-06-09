@@ -17,6 +17,7 @@ export class PostsPager {
   constructor(json_url){
     this.metadata_url = json_url;
     this.cookies['page'] = new Cookie('page', -1);
+    this.cookies['items_per_page'] = new Cookie('items_per_page', -1);
   }
 
   // Register click events for the pager controls
@@ -41,7 +42,8 @@ export class PostsPager {
         console.log('metadata loaded: ' + this.metadata.ids.length + ' post ids.');
 
         this.load_index_from_page_cookie();
-        this.load_filter_elements();
+        this.load_items_per_page_cookie();
+        this.setup_page_chooser();
         this.update();
       },
       error: function(error){
@@ -67,12 +69,23 @@ export class PostsPager {
     }
   }
 
-  set_page_cookie () {
-    this.cookies['page'].set(this.page());
+  load_items_per_page_cookie () {
+    var items_per_page = this.cookies['items_per_page'].get();
+    if (items_per_page == "") {
+      items_per_page = 5;
+    } else {
+      items_per_page = Number(items_per_page);
+    }
+    if (items_per_page < 5) {
+      items_per_page = 5;
+    } else if (items_per_page > 50) {
+      items_per_page = 50;
+    }
+    this.items_per_page = items_per_page;
   }
 
-  // Load filter elements from tags and category lists in metadata
-  load_filter_elements () {
+  // Load the page chooser form and set max page values
+  setup_page_chooser () {
     var last_page_index = this.last_page();
     $('#page_chooser').attr('max', last_page_index);
     $('#page_chooser').val(this.page());
@@ -128,8 +141,11 @@ export class PostsPager {
   // Update the posts summary when page index or filter settings change
   update() {
 
-    this.set_page_cookie();
+    this.cookies['page'].set(this.page());
     $("#page_chooser").val(this.page());
+
+    this.cookies['items_per_page'].set(this.items_per_page);
+    $("#items_per_page").val(this.items_per_page);
 
     // get the list of post ids for the page
     var post_ids = this.get_post_ids();
@@ -169,6 +185,17 @@ export class PostsPager {
   // Apply changes to the filters and update.
   apply_filter () {
     console.log('Applying Filters...');
+
+    // Items Per Page
+    var items_per_page = Number($("#items_per_page").val());
+    if (items_per_page < 5) {
+      items_per_page = 5;
+    } else if (items_per_page > 50) {
+      items_per_page = 50;
+    }
+    this.items_per_page = items_per_page;
+
+    // Page Chooser
     var page_val = Number($("#page_chooser").val());
     if (page_val < 0) {
       page_val = 0;
@@ -177,6 +204,7 @@ export class PostsPager {
     }
     this.index = page_val * this.items_per_page;
 
+    this.setup_page_chooser();
     this.update();
   }
 }
