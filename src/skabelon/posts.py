@@ -145,4 +145,4 @@ def get_gallery_images(src_file):
             else:
                 img_thumb_pairs.append((big_img_relative, None))
 
-    return img_thumb_pairs
+    return sorted(img_thumb_pairs, key=lambda i: i[0])
