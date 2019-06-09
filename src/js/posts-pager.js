@@ -4,15 +4,19 @@
  * Version: 1.0
  */
 
+import {Cookie} from "./cookie.js";
+
 
 export class PostsPager {
   index = 0;
   metadata_url;
   metadata = {};
   items_per_page = 1;
+  cookies = {};
 
   constructor(json_url){
     this.metadata_url = json_url;
+    this.cookies['index'] = new Cookie('index', 1);
   }
 
   // Register click events for the pager controls
@@ -35,6 +39,7 @@ export class PostsPager {
         this.metadata = response;
         console.log('metadata loaded: ' + this.metadata.ids.length + ' post ids.');
 
+        this.get_index_from_cookie();
         this.load_filter_elements();
         this.update();
       },
@@ -42,6 +47,19 @@ export class PostsPager {
         console.log('Error loading pager data: '  + error);
       }
     });
+  }
+
+  get_index_from_cookie () {
+    var index_string = this.cookies['index'].get();
+    if (index_string == "") {
+      this.index = 0;
+    } else {
+      this.index = Number(index_string);
+    }
+  }
+
+  set_index_cookie () {
+    this.cookies['index'].set(this.index);
   }
 
   // Load filter elements from tags and category lists in metadata
@@ -107,6 +125,8 @@ export class PostsPager {
 
   // Update the posts summary when page index or filter settings change
   update() {
+    this.set_index_cookie();
+
     // get the list of post ids for the page
     var post_ids = this.get_post_ids();
 
