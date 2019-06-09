@@ -20,9 +20,13 @@ export class Cookie {
   // Set the value of the cookie
   set (value) {
     var date = new Date();
-    date.setTime(date.getTime() + (this.expiry_days * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + date.toUTCString();
-    document.cookie = this.name + "=" + value + ";" + expires + ";path=/";
+    if (this.expiry_days >= 0) {
+      date.setTime(date.getTime() + (this.expiry_days * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + date.toUTCString(); + ";";
+    } else {
+      var expires = "";
+    }
+    document.cookie = this.name + "=" + value + ";" + expires + "path=/";
   }
 
   // Retrieve the value of the cookie string
