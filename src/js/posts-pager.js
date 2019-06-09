@@ -16,7 +16,7 @@ export class PostsPager {
 
   constructor(json_url){
     this.metadata_url = json_url;
-    this.cookies['index'] = new Cookie('index', 1);
+    this.cookies['page'] = new Cookie('page', -1);
   }
 
   // Register click events for the pager controls
@@ -39,7 +39,7 @@ export class PostsPager {
         this.metadata = response;
         console.log('metadata loaded: ' + this.metadata.ids.length + ' post ids.');
 
-        this.get_index_from_cookie();
+        this.load_index_from_page_cookie();
         this.load_filter_elements();
         this.update();
       },
@@ -49,17 +49,21 @@ export class PostsPager {
     });
   }
 
-  get_index_from_cookie () {
-    var index_string = this.cookies['index'].get();
+  page () {
+    return Math.floor(this.index / this.items_per_page);
+  }
+
+  load_index_from_page_cookie () {
+    var index_string = this.cookies['page'].get();
     if (index_string == "") {
       this.index = 0;
     } else {
-      this.index = Number(index_string);
+      this.index = this.items_per_page * Number(index_string);
     }
   }
 
-  set_index_cookie () {
-    this.cookies['index'].set(this.index);
+  set_page_cookie () {
+    this.cookies['page'].set(this.page());
   }
 
   // Load filter elements from tags and category lists in metadata
@@ -73,35 +77,7 @@ export class PostsPager {
     return this.metadata.ids.slice(this.index, this.index + this.items_per_page);
   }
 
-  // render a post using html in the following template
-  // <div class="container-fluid">
-  //   <div class="card bg-secondary w-80">
-  //     <div class="card-body">
-  //       <h5 class="card-title">Post Title</h5>
-  //       <h6 class="card-subtitle mb-2 text-muted">
-  //         <div class="row">
-  //           <div class="col">
-  //             <span class="badge badge-pill badge-success px-3">Category</span>
-  //             2019-05-21 20:00
-  //           </div>
-  //           <div class="col">
-  //             <span class="pl-3">Tags:&nbsp;</span>
-  //             <span class="badge badge-pill badge-info">tag1</span>
-  //           </div>
-  //         </div>
-  //       </h6>
-  //       <p class="card-text">Post Summary</p>
-  //       <div class="row">
-  //         <div class="col text-right">
-  //           <a href="#" class="card-link">Full Post</a>
-  //         </div>
-  //         <div class="col text-right">
-  //           <a href="#" class="card-link">Source</a>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>
+  // render a post summary using html
   render_posts(dest_id, post_details) {
     console.log('rendering post: ' + dest_id);
     var post_html = '' +
@@ -143,7 +119,7 @@ export class PostsPager {
 
   // Update the posts summary when page index or filter settings change
   update() {
-    this.set_index_cookie();
+    this.set_page_cookie();
 
     // get the list of post ids for the page
     var post_ids = this.get_post_ids();
