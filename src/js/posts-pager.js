@@ -19,6 +19,7 @@ export class PostsPager {
     this.items_per_page = items_per_page;
     this.cookies['page'] = new Cookie('page', -1);
     this.cookies['items_per_page'] = new Cookie('items_per_page', -1);
+    this.cookies['category'] = new Cookie('category', -1);
   }
 
   // Register click events for the pager controls
@@ -45,6 +46,7 @@ export class PostsPager {
         this.load_items_per_page_cookie();
         this.load_index_from_page_cookie();
         this.setup_page_chooser();
+        this.setup_category_chooser();
         this.update();
       },
       error: function(error){
@@ -95,10 +97,59 @@ export class PostsPager {
     $('#page_count').text(last_page_index);
   }
 
+  // Load the category select statement with choices
+  setup_category_chooser () {
+    var chosen_category = this.cookies['category'].get();
+    var choices_str = '';
+    if (chosen_category == 'all') {
+      choices_str += '<option value="all" selected>all</option>\n';
+    } else {
+      choices_str += '<option value="all">all</option>\n';
+    }
+    for (var i = 0; i < this.metadata.categories.length; i += 1){
+      var category = this.metadata.categories[i];
+      choices_str += '<option value="' + category;
+      if (chosen_category == category) {
+        choices_str += '" selected>';
+      } else {
+        choices_str += '">';
+      }
+      choices_str += category + '</option>\n';
+    }
+    $('#category_chooser').html(choices_str);
+  }
+
+  get_category_filter () {
+    return $('#category_chooser').val();
+  }
+
   // find a list of post ids based on the filter settings
   get_post_ids () {
-    // TODO: incorporate filters here
-    return this.metadata.ids.slice(this.index, this.index + this.items_per_page);
+    var category = this.get_category_filter();
+    var post_ids = [];
+    var count = 0;
+    var max = this.index + this.items_per_page;
+
+    if (category == 'all') {
+      return this.metadata.ids.slice(this.index, this.index + this.items_per_page);
+    }
+
+    // only interested in posts that come after the set index
+    var ids_slice = this.metadata.ids.slice(
+      this.index, this.metadata.ids.length)
+
+    for (var i = 0; i < ids_slice.length; i += 1) {
+      var id = ids_slice[i];
+      if (this.metadata.posts[id].category == category) {
+        post_ids.push(id);
+        count += 1;
+      }
+      if (count >= max) {
+        break;
+      }
+    }
+
+    return post_ids;
   }
 
   // render a post summary using html
@@ -143,12 +194,13 @@ export class PostsPager {
 
   // Update the posts summary when page index or filter settings change
   update() {
-
     this.cookies['page'].set(this.page());
     $("#page_chooser").val(this.page());
 
     this.cookies['items_per_page'].set(this.items_per_page);
     $("#items_per_page").val(this.items_per_page);
+
+    this.cookies['category'].set(this.get_category_filter());
 
     // get the list of post ids for the page
     var post_ids = this.get_post_ids();
