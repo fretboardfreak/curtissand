@@ -19,8 +19,7 @@ export function load() {
     $('#projects').load('./sources/projects.html')
   } else if(window.location.href.indexOf('posts.html') > -1){
     console.log('loading posts page.');
-    var posts_pager = new PostsPager('./sources/metadata.json');
-    posts_pager.items_per_page = 10;
+    var posts_pager = new PostsPager('./sources/metadata.json', 10);
     PostsPager.register_pager_events(posts_pager);
     posts_pager.load();
     $('#apply-filter').click(function() {posts_pager.update();});

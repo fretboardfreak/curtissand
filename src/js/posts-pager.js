@@ -11,11 +11,12 @@ export class PostsPager {
   index = 0;
   metadata_url;
   metadata = {};
-  items_per_page = 1;
+  items_per_page;
   cookies = {};
 
-  constructor(json_url){
+  constructor(json_url, items_per_page){
     this.metadata_url = json_url;
+    this.items_per_page = items_per_page;
     this.cookies['page'] = new Cookie('page', -1);
     this.cookies['items_per_page'] = new Cookie('items_per_page', -1);
   }
@@ -41,8 +42,8 @@ export class PostsPager {
         this.metadata = response;
         console.log('metadata loaded: ' + this.metadata.ids.length + ' post ids.');
 
-        this.load_index_from_page_cookie();
         this.load_items_per_page_cookie();
+        this.load_index_from_page_cookie();
         this.setup_page_chooser();
         this.update();
       },
@@ -61,11 +62,13 @@ export class PostsPager {
   }
 
   load_index_from_page_cookie () {
-    var index_string = this.cookies['page'].get();
-    if (index_string == "") {
+    var page = Number(this.cookies['page'].get());
+    if (!Number.isInteger(page) || page < 0) {
       this.index = 0;
+    } else if (page > this.last_page()){
+      this.index = this.items_per_page * this.last_page()
     } else {
-      this.index = this.items_per_page * Number(index_string);
+      this.index = this.items_per_page * page;
     }
   }
 
